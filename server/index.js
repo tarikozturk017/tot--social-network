@@ -8,6 +8,9 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
 import { fileURLToPath } from "url";
+import authRoutes from "./routes/auth.js"; // paths and routes for every feature
+import { register } from "./controllers/auth.js";
+
 
 // CONFIGURATIONS 
 const __filename = fileURLToPath(import.meta.url); // it grabs the file url 
@@ -35,6 +38,14 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage });
+
+// ROUTES WITH FILES
+
+// auth/register is the route, and upload the picture locally w/ middleware to public/assets, register is the controller function
+app.post("/auth/register", upload.single("picture"), register); //normally it should be in route file, it is in index because "upload" is here
+
+// ROUTES
+app.use("/auth", authRoutes); // this '/auth' will be pre route for every route in authRoutes. ex-> '/auth/login'
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 6001;
