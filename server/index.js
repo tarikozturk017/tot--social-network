@@ -10,7 +10,10 @@ import path from "path";
 import { fileURLToPath } from "url";
 import authRoutes from "./routes/auth.js"; // paths and routes for every feature
 import userRoutes from "./routes/users.js"; 
+import postRoutes from "./routes/posts.js"; 
 import { register } from "./controllers/auth.js";
+import { createPost } from "./controllers/posts.js";
+import { verifyToken } from "./middleware/auth.js";
 
 
 // CONFIGURATIONS 
@@ -44,10 +47,12 @@ const upload = multer({ storage });
 
 // auth/register is the route, and upload the picture locally w/ middleware to public/assets, register is the controller function
 app.post("/auth/register", upload.single("picture"), register); //normally it should be in route file, it is in index because "upload" is here
+app.post("/posts", verifyToken, upload.single("picture"), createPost); // images will be located in 'picture' in HTTP call. So it will get it and upload it to local
 
 // ROUTES
 app.use("/auth", authRoutes); // this '/auth' will be pre route for every route in authRoutes. ex-> '/auth/login'
 app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
 
 
 // MONGOOSE SETUP
