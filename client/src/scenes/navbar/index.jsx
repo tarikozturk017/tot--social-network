@@ -33,6 +33,9 @@ const Navbar = () => {
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)"); // allows to determine if the current screen size is lower or higher than min-width
 
     const theme = useTheme();
+    const neutralLight = theme.palette.neutral.light;
+    const dark = theme.palette.neutral.dark;
+
 
     return (
         <div>
