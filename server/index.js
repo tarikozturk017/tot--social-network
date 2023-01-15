@@ -71,7 +71,7 @@ mongoose.connect(process.env.MONGO_URL, {
 
     // when it starts, set the data one time
     // should be done 1 time    
-    User.insertMany(users);
-    Post.insertMany(posts);
+    // User.insertMany(users);
+    // Post.insertMany(posts);
 }).catch((err) => console.log(`${err} did not connect`))
 
